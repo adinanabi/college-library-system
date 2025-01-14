@@ -1,7 +1,7 @@
 # college-library-system
 ![Library Banner](https://images.pexels.com/photos/2041540/pexels-photo-2041540.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)  
 ---
-## 📖Overview
+## Overview
 
 This project is a database management application developed as part of the Database Design module coursework for MSc in Computing and Information Systems. It simulates a **College Library System** with functionalities to manage resources, loans, reservations, and fines effectively.
 
@@ -23,7 +23,7 @@ The project involved designing the database schema, normalizing it, and implemen
     - [Queries](./sql-scripts/queries.sql): Pre-defined queries for common operations.
     - [Triggers](./sql-scripts/triggers.sql): Automation for actions like updating resource availability.
 ---
-## ⚙️Installation and Setup
+## Installation and Setup
 
 1. **Clone the repository**:
    ```bash
@@ -32,17 +32,24 @@ The project involved designing the database schema, normalizing it, and implemen
 2. **Set up the database**:
   - Run create-tables.sql to create the database schema.
   - Populate the database with sample data using insert-data.sql.
-3. **Execute the SQL scripts**:
-  - create-views.sql: Creates tailored views for different user roles.
-  - queries.sql: Contains 12 pre-defined queries for common operations.
-  - triggers.sql: Automates resource availability updates.
+---
+## Usage
+
+After setting up the database, execute the following SQL scripts to utilize the system:
+
+- **Execute SQL scripts**:
+- `create-views.sql`: Creates tailored views for different user roles.
+- `queries.sql`: Contains 12 pre-defined queries for common operations.
+- `triggers.sql`: Automates resource availability updates.
+
+You can run these scripts in your MySQL environment (e.g., MySQL Workbench) to interact with the database and retrieve useful information.
 
 
 ---
 ## Technologies Used
 - Database: MySQL
 - Languages: SQL
-- Tools: MySQL Workbench, ER diagramming tools
+- Tools: MySQL Workbench, ER diagramming tool
 
 ---
 ## License
