@@ -3,7 +3,7 @@
 ---
 ## Overview
 
-This project is a database management application developed as part of the Database Design module coursework for MSc in Computing and Information Systems. It simulates a **College Library System** with functionalities to manage resources, loans, reservations, and fines effectively.
+This project is a database management application developed as part of the Database Design module coursework. It simulates a **College Library System** with functionalities to manage resources, loans, reservations, and fines effectively.
 
 The project involved designing the database schema, normalizing it, and implementing it using **MySQL**. The system supports queries, views, and triggers to handle various library-related operations seamlessly.
 
@@ -27,7 +27,7 @@ The project involved designing the database schema, normalizing it, and implemen
 ---
 ## Objectives and How They Are Solved
 
-### 🎯 Objectives
+### Objectives
 1. **Efficient Resource Management**: Track and manage books, DVDs, CDs, and other resources.
 2. **Loan and Reservation Tracking**: Monitor loans, reservations, and overdue items.
 3. **Fine Management**: Calculate and track overdue fines and payments.
@@ -60,125 +60,24 @@ Below is the ER diagram illustrating the conceptual schema of the database:
 ---
 ## Key Outputs: Views and Queries
 
-### 📊 Views
+### Views
 
 ### 1. **Popular Resources**
 - **Purpose**: This view helps librarians monitor and analyze library services by displaying the number of existing copies, loans, and reservations for each resource. It allows librarians to:
   - Assess the demand for specific resources.
   - Strategically add more copies of high-demand items.
   - Adjust loan periods (e.g., shortening them to 7 days) based on resource usage.
-- **SQL Code**:
-  ```sql
-  CREATE VIEW PopularResources1 AS 
-  SELECT
-      R.ResourceID,
-      R.Title,
-      R.LoanType,
-      COUNT(DISTINCT C.CopyNumber) AS NumOfCopies,
-      COUNT(DISTINCT L.LoanNumber) AS NumOfLoans,
-      COUNT(DISTINCT RS.ReservationNumber) AS NumOfReservations
-  FROM RESOURCE_T R
-  LEFT JOIN COPY C ON R.ResourceID = C.ResourceID
-  LEFT JOIN LOAN L ON R.ResourceID = L.ResourceID
-  LEFT JOIN RESERVATION RS ON R.ResourceID = RS.ResourceID
-  GROUP BY R.ResourceID, R.Title, R.LoanType
-  ORDER BY NumOfLoans DESC;
-- **Output**:
-  ![Popular Resources Output](./screenshots/popular-resources.png)
 
 ### 2. **Overdue Loans**
 - **Purpose**: This view provides real-time monitoring of loan records within the library system. It is primarily used by librarians to:
   - Display details of all loans, including overdue days and loan statuses.
   - Extract overdue days for subsequent fine calculations.
   - Analyze loan trends and ensure timely returns. The view is designed to optimize storage space by calculating derived attributes (e.g., overdue days and loan statuses) dynamically rather than storing them in the database.
-- **SQL Code**:
-  ```sql
-  CREATE VIEW LoanView AS  
-  SELECT  
-      L.LoanNumber AS LoanNumber,  
-      L.MemberID AS MemberID,  
-      M.Fname AS MemberFirstName,  
-      M.Lname AS MemberLastName,  
-      R.ResourceID AS ResourceID,  
-      R.Title AS ResourceTitle,  
-      L.IssueDate AS IssueDate,  
-      L.ReturnDate AS ReturnDate,  
-      L.CopyNumber AS CopyNumber,  
-      R.LoanType AS LoanType,  
-      CASE   
-          WHEN R.LoanType = 0 THEN L.IssueDate + INTERVAL '0' DAY  
-          WHEN R.LoanType = 2 THEN L.IssueDate + INTERVAL '2' DAY  
-          WHEN R.LoanType = 14 THEN L.IssueDate + INTERVAL '14' DAY  
-      END AS DueDate,  
-      CASE   
-          WHEN (L.ReturnDate IS NULL AND CURRENT_DATE >   
-              (CASE   
-                  WHEN R.LoanType = 0 THEN L.IssueDate + INTERVAL '0' DAY  
-                  WHEN R.LoanType = 2 THEN L.IssueDate + INTERVAL '2' DAY  
-                  WHEN R.LoanType = 14 THEN L.IssueDate + INTERVAL '14' DAY  
-              END)) THEN EXTRACT(DAY FROM   
-              (CASE   
-                  WHEN L.ReturnDate IS NULL THEN CURRENT_DATE  
-                  ELSE L.ReturnDate  
-              END) -   
-              (CASE   
-                  WHEN R.LoanType = 0 THEN L.IssueDate + INTERVAL '0' DAY  
-                  WHEN R.LoanType = 2 THEN L.IssueDate + INTERVAL '2' DAY  
-                  WHEN R.LoanType = 14 THEN L.IssueDate + INTERVAL '14' DAY  
-              END))  
-          ELSE NULL  
-      END AS OverdueDays,  
-      CASE   
-          WHEN L.ReturnDate IS NULL AND CURRENT_DATE >   
-              (CASE   
-                  WHEN R.LoanType = 0 THEN L.IssueDate + INTERVAL '0' DAY  
-                  WHEN R.LoanType = 2 THEN L.IssueDate + INTERVAL '2' DAY  
-                  WHEN R.LoanType = 14 THEN L.IssueDate + INTERVAL '14' DAY  
-              END) THEN 'Overdue'  
-          WHEN L.ReturnDate IS NULL AND CURRENT_DATE <=   
-              (CASE   
-                  WHEN R.LoanType = 0 THEN L.IssueDate + INTERVAL '0' DAY  
-                  WHEN R.LoanType = 2 THEN L.IssueDate + INTERVAL '2' DAY  
-                  WHEN R.LoanType = 14 THEN L.IssueDate + INTERVAL '14' DAY  
-              END) THEN 'Not Returned (Due Soon)'  
-          WHEN L.ReturnDate IS NOT NULL AND L.ReturnDate >   
-              (CASE   
-                  WHEN R.LoanType = 0 THEN L.IssueDate + INTERVAL '0' DAY  
-                  WHEN R.LoanType = 2 THEN L.IssueDate + INTERVAL '2' DAY  
-                  WHEN R.LoanType = 14 THEN L.IssueDate + INTERVAL '14' DAY  
-              END) THEN 'Overdue'  
-          ELSE 'Returned'  
-      END AS LoanStatus 
-  FROM LOAN L  
-  JOIN MEMBER M ON L.MemberID = M.MemberID 
-  JOIN RESOURCE_T R ON L.ResourceID = R.ResourceID;
-- **Output**:
-  ![Overdue Loans Output](./screenshots/popular-resources.png)
   
 ### 3. **Pending Reservations**
 - **Purpose**: The Member Summary view provides both librarians and members with a detailed overview of member account details. It allows:
   - Librarians to analyze trends in overdue loans and payment history, which may inform decisions like extending loan periods or enforcing stricter policies.
   - Members to track their current account status, including overdue fines, total payments made, and the remaining amount due. This helps promote responsible use of library resources by making members aware of their financial obligations.
-- **SQL Code**:
-  ```sql
-  CREATE VIEW MemberSummary AS   
-  SELECT   
-      M.MemberID,   
-      M.Fname AS MemberFirstName,   
-      M.Lname AS MemberLastName,   
-      M.Email, 
-      M.MemberType,   
-      M.AccountStatus,   
-      COUNT(CASE WHEN LV.ReturnDate IS NULL THEN 1 END) AS TotalLoan,  
-      COALESCE(SUM(LV.Overduedays), 0) AS AmountDue,   
-      COALESCE(SUM(DISTINCT P.PaymentAmount), 0) AS PaymentAmount, 
-      COALESCE(SUM(LV.Overduedays), 0) - COALESCE(SUM(DISTINCT P.PaymentAmount), 0) AS RemainingDue 
-  FROM MEMBER M   
-  LEFT JOIN LoanView LV ON M.MemberID = LV.MemberID   
-  LEFT JOIN PAYMENT P ON M.MemberID = P.MemberID   
-  GROUP BY M.MemberID, M.Fname, M.Lname, M.Email, M.MemberType, M.AccountStatus;
-- **Output**:
-   ![Pending Reservations Output](./screenshots/popular-resources.png)
 
 ---
 ## Installation and Setup
@@ -188,8 +87,8 @@ Below is the ER diagram illustrating the conceptual schema of the database:
    git clone https://github.com/adinanabi/college-library-system.git
    cd college-library-system
 2. **Set up the database**:
-  - Run create-tables.sql to create the database schema.
-  - Populate the database with sample data using insert-data.sql.
+  - Run `create-tables.sql` to create the database schema.
+  - Populate the database with sample data using `insert-data.sql`.
 ---
 ## Usage
 
