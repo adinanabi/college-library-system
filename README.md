@@ -54,8 +54,9 @@ The project involved designing the database schema, normalizing it, and implemen
 
 ---
 ## ER Diagram
+
 Below is the ER diagram illustrating the conceptual schema of the database:
-![ER_Diagram](./screenshots/popular-resources.png)
+![ER_Diagram](./database-design/ER_diagram.png)
 ---
 ## Key Outputs: Views and Queries
 
