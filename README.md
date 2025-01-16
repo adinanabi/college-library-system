@@ -67,18 +67,20 @@ Below is the ER diagram illustrating the conceptual schema of the database:
   - Assess the demand for specific resources.
   - Strategically add more copies of high-demand items.
   - Adjust loan periods (e.g., shortening them to 7 days) based on resource usage.
+![Popular Resources View Output](./images/view1.png)
 
 ### 2. **Overdue Loans**
 - **Purpose**: This view provides real-time monitoring of loan records within the library system. It is primarily used by librarians to:
   - Display details of all loans, including overdue days and loan statuses.
   - Extract overdue days for subsequent fine calculations.
   - Analyze loan trends and ensure timely returns. The view is designed to optimize storage space by calculating derived attributes (e.g., overdue days and loan statuses) dynamically rather than storing them in the database.
-  
+![Overdue Loans View Output](./images/view2.png)
+
 ### 3. **Pending Reservations**
 - **Purpose**: The Member Summary view provides both librarians and members with a detailed overview of member account details. It allows:
   - Librarians to analyze trends in overdue loans and payment history, which may inform decisions like extending loan periods or enforcing stricter policies.
   - Members to track their current account status, including overdue fines, total payments made, and the remaining amount due. This helps promote responsible use of library resources by making members aware of their financial obligations.
-
+![Pending Reservations View Output](./images/view3.png)
 ---
 ## Installation and Setup
 
