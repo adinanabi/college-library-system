@@ -67,20 +67,39 @@ Below is the ER diagram illustrating the conceptual schema of the database:
   - Assess the demand for specific resources.
   - Strategically add more copies of high-demand items.
   - Adjust loan periods (e.g., shortening them to 7 days) based on resource usage.
-![Popular Resources View Output](./images/view1.png)
+![Popular Resources View Output](./sql-scripts/images/view1.png)
 
 ### 2. **Overdue Loans**
 - **Purpose**: This view provides real-time monitoring of loan records within the library system. It is primarily used by librarians to:
   - Display details of all loans, including overdue days and loan statuses.
   - Extract overdue days for subsequent fine calculations.
   - Analyze loan trends and ensure timely returns. The view is designed to optimize storage space by calculating derived attributes (e.g., overdue days and loan statuses) dynamically rather than storing them in the database.
-![Overdue Loans View Output](./images/view2.png)
+![Overdue Loans View Output](./sql-scripts/images/view2.png)
 
 ### 3. **Pending Reservations**
 - **Purpose**: The Member Summary view provides both librarians and members with a detailed overview of member account details. It allows:
   - Librarians to analyze trends in overdue loans and payment history, which may inform decisions like extending loan periods or enforcing stricter policies.
   - Members to track their current account status, including overdue fines, total payments made, and the remaining amount due. This helps promote responsible use of library resources by making members aware of their financial obligations.
-![Pending Reservations View Output](./images/view3.png)
+![Pending Reservations View Output](./sql-scripts/images/view3.png)
+---
+
+### Predefined Queries for Common Operations
+To facilitate common library operations, a set of predefined queries was created. These queries are designed to streamline routine tasks and provide quick access to frequently needed information. You can find these queries in the file:
+[queries](./sql-scripts/queries.sql)
+This file contains SQL queries for operations such as:
+1. List members with unreturned overdue resources with resource names.
+2. Retrieve the top 5 members with the highest number of loans in 2023.
+3. Show the location and the number of available copies for a resource.
+4. List all CDs in one class (i.e.“Music” class).
+5. Find the top 10 borrowed books.
+6. Show the resources with no available copies.
+7. Retrieve Current Reservations.
+8. Display pending reservation notifications for a member (i.e. MemberID=20159029):.
+9. Display current loans for a number(i.e. NumberID=20159030), including loan status. X
+10. X
+11. The query is used by library administrations to monitor and manage member accounts that have been temporarily suspended within the system.
+12. Retrieve Reservation for a particular resource (i.e. the resource with the title 'Principles of marketing engineering and analytics').
+
 ---
 ## Installation and Setup
 
