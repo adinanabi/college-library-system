@@ -94,11 +94,9 @@ This file contains SQL queries for operations such as:
 5. Find the top 10 borrowed books.
 6. Show the resources with no available copies.
 7. Retrieve Current Reservations.
-8. Display pending reservation notifications for a member (i.e. MemberID=20159029):.
-9. Display current loans for a number(i.e. NumberID=20159030), including loan status. X
-10. X
-11. The query is used by library administrations to monitor and manage member accounts that have been temporarily suspended within the system.
-12. Retrieve Reservation for a particular resource (i.e. the resource with the title 'Principles of marketing engineering and analytics').
+8. Display pending reservation notifications for a member (i.e. MemberID=20159029).
+9. The query is used by library administrations to monitor and manage member accounts that have been temporarily suspended within the system.
+10. Retrieve Reservation for a particular resource (i.e. the resource with the title 'Principles of marketing engineering and analytics').
 
 ---
 ## Installation and Setup
